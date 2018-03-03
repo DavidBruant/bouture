@@ -1,7 +1,6 @@
 import {expect} from 'chai'
 import Bouture from '../bouture.js'
 
-/*
 describe('Bouture.div', () => {
   it('should create an object', () => {
     const b = Bouture.div
@@ -20,7 +19,7 @@ describe('Bouture.div.getElement()', () => {
     expect(b).to.be.an.instanceof(HTMLElement)
   })
 })
-*/
+
 describe(`Bouture.div('yo')`, () => {
   it(`should create a div with text 'yo'`, () => {
     const bdiv = Bouture.div('yo')
@@ -83,7 +82,7 @@ describe('Bouture.div(new Symbol())', () => {
     expect(bdiv.getElement().textContent).to.equal('')
   })
 })
-/*
+
 describe('Bouture.a', () => {
   it('should create a <a>', () => {
     const a = Bouture.a
@@ -107,7 +106,7 @@ describe('Bouture.bloublou', () => {
     expect(bloublou).to.be.undefined
   })
 })
-*/
+
 describe('Bouture.div({lang: "fr"})', () => {
   it('should create a div with a lang attribute', () => {
     const bdiv = Bouture.div({lang: 'fr'})
