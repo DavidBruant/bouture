@@ -252,10 +252,9 @@ describe(`Bouture.table.tbody`, () => {
   })
 })
 
-/*
 describe(`Bouture.ul( ['a', 'b', 'c'].map(Bouture.li) )`, () => {
   it('should create a ul with 3 li children with different texts', () => {
-    const ul = Bouture.ul(['a', 'b', 'c'].map(Bouture.li)).getElement()
+    const ul = Bouture.ul(['a', 'b', 'c'].map(text => Bouture.li(text))).getElement()
 
     expect(ul.parentNode).to.equal(null)
     expect(ul.tagName.toLowerCase()).to.equal('ul')
@@ -265,4 +264,3 @@ describe(`Bouture.ul( ['a', 'b', 'c'].map(Bouture.li) )`, () => {
     expect(ul.children[0].textContent).to.equal('a')
   })
 })
-*/

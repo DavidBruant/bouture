@@ -10,40 +10,50 @@ const Bouture = {
           if (!Number.isNaN(arg)) element.append(arg)
           break
         case 'object':
-          if (arg !== null) {
-            Object.keys(arg)
-              .forEach(attributeName => {
-                const attributeValue = arg[attributeName]
-                switch (typeof attributeValue) {
-                  case 'boolean':
-                    if (attributeValue) {
-                      element.setAttribute(attributeName, '')
-                    }
-                    break
-                  case 'number':
-                    if (!Number.isNaN(attributeValue)) {
-                      element.setAttribute(attributeName, attributeValue)
-                    }
-                    break
-                  case 'string':
-                    element.setAttribute(attributeName, attributeValue)
-                    break
-                  case 'object':
-                    if (attributeValue !== null) {
-                      element
-                        .setAttribute(attributeName, attributeValue.join(' '))
-                    }
-                    break
-                  case 'symbol':
-                    break
-                  case 'undefined':
-                    break
-                }
-              })
+          if (arg === null) break
+          if (Array.isArray(arg)) {
+            arg.forEach(node => {
+              // Check if it's a Bouture Object
+              if (node.valueOf().name === 'branche' && node.hasOwnProperty('getElement')) {
+                element.append(node.getElement())
+              }
+            })
+            break
           }
-          break
-        default:
-          // Other types not handle by cases : Symbol, boolean, undefined
+          Object.keys(arg)
+            .forEach(attributeName => {
+              const attributeValue = arg[attributeName]
+              switch (typeof attributeValue) {
+                case 'boolean':
+                  if (attributeValue) {
+                    element.setAttribute(attributeName, '')
+                  }
+                  break
+                case 'number':
+                  if (!Number.isNaN(attributeValue)) {
+                    element.setAttribute(attributeName, attributeValue)
+                  }
+                  break
+                case 'string':
+                  element.setAttribute(attributeName, attributeValue)
+                  break
+                case 'object':
+                  if (attributeValue !== null) {
+                    element
+                      .setAttribute(attributeName, attributeValue.join(' '))
+                  }
+                  break
+                case 'symbol':
+                  break
+                case 'undefined':
+                  break
+              }
+            })
+            break
+          case 'function':
+            break
+          default:
+            // Other types not handle by cases : Symbol, boolean, undefined
       }
     })
     return element
@@ -55,7 +65,7 @@ tagNames.forEach(tagName => {
   Object.defineProperty(Bouture, tagName, {
     get: function () {
       let tags = [{name: tagName, args: []}]
-      const branche = function (...args) {
+      function branche (...args) {
         const lastTag = tags.pop()
         tags.push({name: lastTag.name, args: args})
         return branche
