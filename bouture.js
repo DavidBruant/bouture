@@ -49,11 +49,11 @@ const Bouture = {
                   break
               }
             })
-            break
-          case 'function':
-            break
-          default:
-            // Other types not handle by cases : Symbol, boolean, undefined
+          break
+        case 'function':
+          break
+        default:
+          // Other types not handle by cases : Symbol, boolean, undefined
       }
     })
     return element
