@@ -252,7 +252,7 @@ describe(`Bouture.table.tbody`, () => {
   })
 })
 
-describe(`Bouture.ul( ['a', 'b', 'c'].map(Bouture.li) )`, () => {
+describe(`Bouture.ul( ['a', 'b', 'c'].map(text => Bouture.li(text)))`, () => {
   it('should create a ul with 3 li children with different texts', () => {
     const ul = Bouture.ul(['a', 'b', 'c'].map(text => Bouture.li(text))).getElement()
 
