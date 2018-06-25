@@ -119,12 +119,14 @@ const EVENTNAMES = new Set(['abort', 'blur', 'error', 'focus', 'cancel', 'canpla
 
 function isValidAttributeName (tagName, attributeName) {
   const tagWithAttributes = TAGSWITHATTRIBUTES.get(tagName)
-  
-  if (attributeName.match(/^data/)) {
-    return !!attributeName.match(/^data(-[a-z0-9][a-z0-9\.:_]*)*$/)
-  } else if (tagWithAttributes.has(attributeName) || GLOBALATTRIBUTES.has(attributeName)) {
+
+  if (tagWithAttributes.has(attributeName) || GLOBALATTRIBUTES.has(attributeName)) {
     return true
   }
+  if (attributeName.match(/^data/)) {
+    return !!attributeName.match(/^data(-[a-z0-9][a-z0-9\.:_]*)*$/)
+  }
+  console.log(`The attribute: ${attributeName} for the tag: ${tagName} is not considered valid and is ignored.`)
   return false
 }
 
