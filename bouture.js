@@ -117,6 +117,17 @@ const TAGSWITHATTRIBUTES = new Map([
 const GLOBALATTRIBUTES = new Set(['accesskey', 'autocapitalize', 'class', 'contenteditable', 'contextmenu', 'dir', 'draggable', 'dropzone', 'hidden', 'id', 'is', 'itemid', 'itemprop', 'itemref', 'itemscope', 'itemtype', 'lang', 'slot', 'spellcheck', 'style', 'tabindex', 'title', 'translate'])
 const EVENTNAMES = new Set(['abort', 'blur', 'error', 'focus', 'cancel', 'canplay', 'canplaythrough', 'change', 'click', 'close', 'contextmenu', 'cuechange', 'dblclick', 'drag', 'dragend', 'dragenter', 'dragexit', 'dragleave', 'dragover', 'dragstart', 'drop', 'durationchange', 'emptied', 'ended', 'gotpointercapture', 'input', 'invalid', 'keydown', 'keypress', 'keyup', 'load', 'loadeddata', 'loadedmetadata', 'loadend', 'loadstart', 'lostpointercapture', 'mousedown', 'mouseenter', 'mouseleave', 'mousemove', 'mouseout', 'mouseover', 'mouseup', 'mousewheel', 'wheel', 'pause', 'play', 'playing', 'pointerdown', 'pointermove', 'pointerup', 'pointercancel', 'pointerover', 'pointerout', 'pointerenter', 'pointerleave', 'progress', 'ratechange', 'reset', 'scroll', 'seeked', 'seeking', 'select', 'selectstart', 'selectionchange', 'show', 'stalled', 'submit', 'suspend', 'timeupdate', 'volumechange', 'touchcancel', 'touchend', 'touchmove', 'touchstart', 'transitioncancel', 'transitionend', 'waiting'])
 
+function isValidAttributeName (tagName, attributeName) {
+  const tagWithAttributes = TAGSWITHATTRIBUTES.get(tagName)
+  
+  if (attributeName.match(/^data/)) {
+    return !!attributeName.match(/^data(-[a-z0-9][a-z0-9\.:_]*)*$/)
+  } else if (tagWithAttributes.has(attributeName) || GLOBALATTRIBUTES.has(attributeName)) {
+    return true
+  }
+  return false
+}
+
 TAGSWITHATTRIBUTES.forEach((attributes, tagName) => {
   Object.defineProperty(Bouture, tagName, {
     get: function () {
@@ -178,17 +189,6 @@ function completeElement (tag, args) {
               return name.replace(/^once|on/, '').toLowerCase()
             }
 
-            function isAttribute (name) {
-              const tagWithAttributes = TAGSWITHATTRIBUTES.get(tag)
-              
-              if (name.match(/^data/)) {
-                return !!name.match(/^data(-[a-z0-9][a-z0-9\.:_]*)*$/)
-              } else if (tagWithAttributes.has(name) || GLOBALATTRIBUTES.has(name)) {
-                return true
-              }
-              return false
-            }
-
             function isEvent (name) {
               if (name.match(/^on[A-Z]|once[A-Z]/)) {
                 return EVENTNAMES.has(getEventName(name))
@@ -202,7 +202,7 @@ function completeElement (tag, args) {
                 const options = {once: keyName.match(/^once/)}
                 element.addEventListener(eventName, eventValue, options)
               }
-            } else if (isAttribute(keyName)) {
+            } else if (isValidAttributeName(tag, keyName)) {
               const attributeValue = arg[keyName]
               const attributeName = keyName
               switch (typeof attributeValue) {
