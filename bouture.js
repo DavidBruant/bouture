@@ -182,7 +182,7 @@ function completeElement (tag, args) {
               const tagWithAttributes = TAGSWITHATTRIBUTES.get(tag)
               
               if (name.match(/^data/)) {
-                return name.match(/^data-([a-z]|[0-9]|-)*$/)
+                return !!name.match(/^data(-[a-z0-9][a-z0-9\.:_]*)*$/)
               } else if (tagWithAttributes.has(name) || GLOBALATTRIBUTES.has(name)) {
                 return true
               }
