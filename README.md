@@ -50,7 +50,7 @@ By example, use [import](https://developer.mozilla.org/en-US/docs/Web/JavaScript
 
 ````html
 <script type=module>
-  import Bouture from 'https://cdn.rawgit.com/DavidBruant/bouture/13cb6c68/bouture.js'
+  import Bouture from 'https://cdn.jsdelivr.net/gh/DavidBruant/bouture@13cb6c683fa87e5feea574311dcda6353489bb3b/bouture.js'
 
   const html = Bouture.ul(['abra', 'kadabra', 'alakazam'].map(Bouture.li))
   document.querySelector('body').append(html.getElement())
